@@ -24,4 +24,3 @@ clean:
 
 doc:
 	@mkdir -p $(OUT_DIR)
-	@doxygen doxyfile
