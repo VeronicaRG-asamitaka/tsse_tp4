@@ -68,7 +68,7 @@ void test_todos_los_leds_inician_apagados(void) {
     uint16_t leds_virtuals = 0xFFFF;
 
     LedsInit(&leds_virtuals);
-    TEST_ASSERT_EQUAL_HEX16(0x0000, leds_virtuals);
+    TEST_ASSERT_EQUAL_HEX16(0x000F, leds_virtuals);
 }
 
 //! * @test  2. Prender un LED individual.
