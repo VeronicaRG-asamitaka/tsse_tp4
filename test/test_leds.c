@@ -130,11 +130,27 @@ void test_limites_parametros(void) {
 
     TEST_ASSERT_EQUAL(1, isLedValid(led_virtual_min));
     TEST_ASSERT_EQUAL(1, isLedValid(led_virtual_max));
+    TEST_ASSERT_EQUAL(1, isLedValid((led_virtual_min + led_virtual_max) / 2));
+
+    LedTurnOnSingle(led_virtual_min);
+    TEST_ASSERT_EQUAL_HEX16(0x0001, leds_virtuals); // Asumiendo LED 1 = bit 0
+
+    LedTurnOffSingle(led_virtual_min);
+    TEST_ASSERT_EQUAL_HEX16(0x0000, leds_virtuals);
 }
 //! * @test  10. Revisar parámetros fuera de los limites.
 void test_parametros_fuera_de_limites(void) {
+    uint16_t estado_inicial = leds_virtuals;
+
     TEST_ASSERT_EQUAL(0, isLedValid(led_virtual_out_min));
     TEST_ASSERT_EQUAL(0, isLedValid(led_virtual_out_max));
+
+    LedTurnOnSingle(led_virtual_out_min);
+    TEST_ASSERT_EQUAL_HEX16(estado_inicial, leds_virtuals);
+
+    LedTurnOffSingle(led_virtual_out_max);
+    TEST_ASSERT_EQUAL_HEX16(estado_inicial, leds_virtuals);
+    TEST_ASSERT_EQUAL(0, LedGetState(led_virtual_out_min)); // Consulta LED inválido → 0
 }
 
 /* === End of documentation ==================================================================== */
